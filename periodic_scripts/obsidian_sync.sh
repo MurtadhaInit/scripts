@@ -1,7 +1,8 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
+
 
 cd "$HOME/Obsidian"
-gstatus=`git status --porcelain`
+gstatus=$(git status --porcelain)
 
 if [ ${#gstatus} -ne 0 ]
 then
