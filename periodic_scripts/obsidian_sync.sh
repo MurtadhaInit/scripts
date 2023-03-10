@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 
-cd "$HOME/Obsidian"
+cd "$HOME/Obsidian" || exit
 gstatus=$(git status --porcelain)
 
 if [ ${#gstatus} -ne 0 ]
