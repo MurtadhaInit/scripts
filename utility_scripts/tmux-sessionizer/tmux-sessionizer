@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# NOTE: use these arguments if they help: -mindepth 1 -maxdepth 1
+session=$(find ~/Work ~/Projects -type d | fzf)
+session_name=$(basename "$session" | tr . _)
+
+if ! tmux has-session -t "$session_name" 2> /dev/null; then
+    tmux new-session -s "$session_name" -c "$session" -d
+fi
+
+if [ "$TERM_PROGRAM" = tmux ]; then
+    tmux switch-client -t "$session_name"
+else
+    tmux attach -t "$session_name"
+fi
