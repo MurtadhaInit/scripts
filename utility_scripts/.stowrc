@@ -1,2 +1,6 @@
---dir=$HOME/Scripts/utility_scripts
---target=$HOME/.local/bin
+# ignore sll .DS_Store files
+--ignore=\.DS_Store
+# source is the current directory
+--dir=.
+# target is $HOME/.local/bin (absolute paths are problematic/buggy)
+--target=../../.local/bin

@@ -1,15 +1,20 @@
 #!/usr/bin/env bash
 
-# NOTE: use these arguments if they help: -mindepth 1 -maxdepth 1
-session=$(find ~/Work ~/Projects -type d | fzf)
-session_name=$(basename "$session" | tr . _)
+directory_path=$(zoxide query -l | fzf)
 
-if ! tmux has-session -t "$session_name" 2> /dev/null; then
-    tmux new-session -s "$session_name" -c "$session" -d
+# if empty, exit
+if [ -z "$directory_path" ]; then
+    exit 0
 fi
 
-if [ "$TERM_PROGRAM" = tmux ]; then
-    tmux switch-client -t "$session_name"
+directory_name=$(basename "$directory_path" | tr . _)
+
+if ! tmux has-session -t "$directory_name" 2> /dev/null; then
+    tmux new-session -s "$directory_name" -c "$directory_path" -d
+fi
+
+if [ -z "$TMUX" ]; then
+    tmux attach -t "$directory_name"
 else
-    tmux attach -t "$session_name"
+    tmux switch-client -t "$directory_name"
 fi
