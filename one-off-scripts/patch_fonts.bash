@@ -9,8 +9,9 @@ function exists() {
 read -p "Make sure you have enough storage. Continue? " -n 1 -r
 echo
 if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-  # create a directory
-  mkdir NerdFonts && cd NerdFonts
+
+  mkdir NerdFonts 
+  cd NerdFonts
 
   # clone the repo
   if [ ! -d "./nerd-fonts" ]; then
@@ -50,13 +51,16 @@ if [[ "$REPLY" =~ ^[Yy]$ ]]; then
   # execute the script for every font in that directory
   for entry in "$search_dir"/*
   do
-    fontforge -script ./nerd-fonts/font-patcher "$entry" --complete --careful --also-windows --outputdir ./patched-fonts
-    # place the the output in ./patched-fonts
+    # the --also-windows option is has apparently been deprecated
+    # fontforge -script ./nerd-fonts/font-patcher "$entry" --complete --careful --outputdir ./patched-fonts
+
+    fontforge -script font-patcher --adjust-line-height --complete --careful --outputdir ./patched-fonts --variable-width-glyphs --progressbars "$entry"
+
   done
 
   # move patched windows fonts elsewhere
-  mv ./patched-fonts/*Windows* ./patched-fonts-windows/
+  mv -f ./patched-fonts/*Windows* ./patched-fonts-windows/
   # copy patched fonts to the fonts directory for the current user
-  cp -R ./patched-fonts/ ~/Library/Fonts/
+  cp -iR ./patched-fonts/ ~/Library/Fonts/
 
 fi
