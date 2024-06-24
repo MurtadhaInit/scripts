@@ -1,0 +1,11 @@
+.venv/
+
+# the directory where the fonts to be patched are placed
+Original/
+
+# the directory where the patched fonts will be placed
+Exported/
+
+# the downloaded script and its unzipped directory
+FontPatcher.zip
+FontPatcher/
