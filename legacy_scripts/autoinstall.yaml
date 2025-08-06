@@ -1,0 +1,27 @@
+autoinstall:
+  version: 1
+  interactive-sections:
+    - network
+    - storage
+  identity:
+    realname: Murtadha
+    hostname: ubuntu-workstation
+    username: murtadha
+    password: $1$6wZHM3A2$/1sE3Ciq3HL3dMTCT0GyE1
+
+    locale: en_US
+    keyboard:
+      layout: us
+    packages:
+      - git
+      - ansible
+    codecs:
+      install: true
+    drivers:
+      install: true
+    # late-commands:
+    #   - |
+    #     curl -fsSL https://apt.fury.io/nushell/gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/fury-nushell.gpg
+    #     echo "deb https://apt.fury.io/nushell/ /" | sudo tee /etc/apt/sources.list.d/fury.list
+    #     sudo apt update
+    #     sudo apt install nushell
