@@ -1,0 +1,7 @@
+- name: Symlink dotfiles with GNU Stow
+  become: false
+  ansible.builtin.shell:
+    chdir: "{{ home_dir }}/.dotfiles/Applications"
+    cmd: stow -v */
+  register: stow_result
+  changed_when: ("LINK:" in stow_result.stdout) or ("LINK:" in stow_result.stderr)
