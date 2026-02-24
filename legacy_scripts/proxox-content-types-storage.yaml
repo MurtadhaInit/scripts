@@ -1,0 +1,19 @@
+- name: Check the content types for current 'local' storage
+  ansible.builtin.command:
+    cmd: pvesh get /storage/local --output-format json
+  changed_when: false
+  register: local_storage_config
+- name: Enable all content types for 'local' storage (including 'snippets')
+  changed_when: true
+  vars:
+    desired_content_types:
+      - vztmpl
+      - backup
+      - iso
+      - snippets
+      - import
+      - images
+      - rootdir
+  when: desired_content_types | difference((local_storage_config.stdout | from_json).content.split(',')) | length > 0
+  ansible.builtin.command:
+    cmd: "pvesm set local --content {{ desired_content_types | join(',') }}"
